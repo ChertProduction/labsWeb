@@ -25,7 +25,7 @@ def sendRequest(sockUser, infoUser, connectUser):
                                                         #відправляєм клієнту у json форматі результат
                                                         #обчислень й номер підключення ( номер кліента )
 
-#главная функция
+#головна функція
 def main() -> None:
     sock = socket(AF_INET, SOCK_STREAM)                 #створюмо сокет
     sock.bind((HOST, PORT))                             #отримуємо хост і порт

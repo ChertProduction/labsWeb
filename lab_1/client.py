@@ -18,7 +18,7 @@ def readRequest(sock):
         data = sock.recv(1024)
         print(json.loads(data.decode(CODING)))                     #зчитуємо формат json
 
-#главная функция
+#головна функція
 def main():
     USERS = []                                                     #створюємо список клієнтів
     for i in QUEUE_LEN:
