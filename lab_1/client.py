@@ -22,7 +22,7 @@ def readRequest(sock):
 def main():
     USERS = []                                                     #створюємо список клієнтів
     for i in QUEUE_LEN:
-        sock = socket(AF_INET, SOCK_STREAM)                        #створємо QUEUE_LEN-у кількість
+        sock = socket(AF_INET, SOCK_STREAM)                        #створюємо QUEUE_LEN-у кількість
         sock.connect((HOST, PORT))                                 #сокетів
         USERS.append(sock)                                         #закидуємо їх у список клієнтів
 
