@@ -19,7 +19,7 @@ QUEUE_LEN = (93 + 23)-90     # кількість допустимих підк�
 def sendRequest(sockUser, infoUser, connectUser):
     while True:
         data = sockUser.recv(1024)                      #постійно відправляємо, підтримуємо з'єдання
-        data = float(json.loads(data.decode(CODING)))   #створюємо data у json форматі
+        data = float(c)   #створюємо data у json форматі
         data = math.log(data)                           #вичисляємо логарифм натуральний
         sockUser.send((json.dumps(f'Client №{connectUser.index(infoUser[1]+1)} Result: {data}')).encode(CODING))
                                                         #відправляєм клієнту у json форматі результат
