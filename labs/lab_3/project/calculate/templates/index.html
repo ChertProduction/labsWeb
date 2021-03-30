@@ -2,28 +2,25 @@
 <html>
 <head>
     <title>
-        Отправляем JSON-данные на сервер
+       JSON
     </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
 <body style="text-align:center;" id="body">
-    <!-- заголовок -->
-    <h1> Простая форма для проверки работы JSON </h1>
-    <!-- делаем форму с полями ввода -->
+ 
+    <h1> send JSON </h1>
+
     <p> 
-        <input type="text" id="name" placeholder="Ваше имя">
-        <!-- по нажатию на эту кнопку данные уйдут на сервер -->
-        <button onclick="sendJSON()">Проверить JSON</button>
-        <!-- а вот тут они появятся снова, но уже после обработки сервером -->
+        <input type="text" id="number" placeholder="Your number">
+        <button onclick="sendJSON()">Send</button>
         <p class="result" style="color:blue"></p>
     </p>
 </body>
-<!-- скрипт, который обработает нажатие на кнопку и отправит данные на сервер -->
+
 <script>
-    // эта функция сработает при нажатии на кнопку
     function sendJSON() {
-      // с помощью jQuery обращаемся к элементам на странице по их именам
-      let name = document.querySelector('#name');
+
+      let number = document.querySelector('#number');
       let result = document.querySelector('.result');
       let xhr = new XMLHttpRequest();
       let url = "http://127.0.0.1:8000/api/example";
@@ -37,7 +34,7 @@
           result.innerHTML = this.responseText;
         }
       };
-      var data = JSON.stringify({"input_value": name.value });
+      var data = JSON.stringify({"input_value": number.value });
       xhr.send(data);
     }
   </script>
