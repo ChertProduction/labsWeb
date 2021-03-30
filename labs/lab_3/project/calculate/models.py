@@ -10,3 +10,4 @@ class CalculateRequest:
 class CalculateResponse:
     def __init__(self, result: float):
         self.output_value = result
+
