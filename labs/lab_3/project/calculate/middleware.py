@@ -1,9 +1,11 @@
 import time
+import requests
+
 def timing(get_response):
     def middleware(request):
-        t1 = time.time()
+        info_request = request
+        print(info_request.META['CONTENT_TYPE'])
         response = get_response(request)
-        t2 = time.time()
-        print("TOTAL TIME:", (t2 - t1))
+        info_response = response
         return response
     return middleware
