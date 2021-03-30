@@ -8,7 +8,7 @@
 </head>
 <body style="text-align:center;" id="body">
  
-    <h1> send JSON </h1>
+    <h1> log(number) </h1>
 
     <p> 
         <input type="text" id="number" placeholder="Your number">
@@ -34,7 +34,10 @@
           result.innerHTML = this.responseText;
         }
         else if (xhr.status === 400){
-          result.innerHTML = "Bad request";
+          result.innerHTML = "400 - Bad request";
+        }
+        else{
+          result.innerHTML = "Error";
         }
       };
       var data = JSON.stringify({"input_value": number.value });

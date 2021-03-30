@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 from json import loads
 
+import json
+
 from django.http import HttpRequest
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -16,19 +18,14 @@ def index(request):
     return render(request, 'index.html', {
         'foo': 'bar',
     })
-
-
-"""
-Клас, що описує точку доступа до API застосунку. Має наслідуватись від
-APIView.
-"""
+    
 class ExampleView(APIView):
 
     def post(self, request: HttpRequest):
         parsed_request = loads(request.body)
 
         request_data_serializer = CalculationRequestSerializer(data=parsed_request)
-        
+
         if not request_data_serializer.is_valid():
 
             return Response(status=400)
@@ -42,8 +39,12 @@ class ExampleView(APIView):
         response_data_serializer = CalculationResponseSerializer(response_data)
 
         response = Response(response_data_serializer.data)
-
+        
         return response
+
+
+
+
 
 @api_view(['GET', 'POST'])
 def another_example(request: HttpRequest):
