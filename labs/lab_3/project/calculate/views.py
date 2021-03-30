@@ -29,7 +29,7 @@ class ExampleView(APIView):
 
         request_data_serializer = CalculationRequestSerializer(data=parsed_request)
         if not request_data_serializer.is_valid():
-
+            
             return Response(status=400)
 
         request_data = CalculateRequest(**request_data_serializer.validated_data)

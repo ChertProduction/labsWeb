@@ -33,6 +33,9 @@
         if (xhr.readyState === 4 && xhr.status === 200) {
           result.innerHTML = this.responseText;
         }
+        else if (xhr.status === 400){
+          result.innerHTML = "Bad request";
+        }
       };
       var data = JSON.stringify({"input_value": number.value });
       xhr.send(data);
