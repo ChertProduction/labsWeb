@@ -1,0 +1,30 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: api
+      POSTGRES_DB: api
+      POSTGRES_PASS: api
+      POSTGRES_PASSWORD: api
+    volumes:
+      - pgdata:/var/lib/posgresql/data
+  api:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/api
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - db
+  redis:
+    restart: always
+    image: redis
+    ports:
+      - "6379:6379"
+volumes:
+  pgdata:
