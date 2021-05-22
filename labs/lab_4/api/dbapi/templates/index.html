@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Модели в Django</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body class="container">
+    <input type="text" id="name" placeholder="Name">
+    <input type="text" id="surname" placeholder="Surname">
+    <button onclick="putJSON()">PUT</button>
+
+    </br>
+    </br>
+
+    <input type="text" id="id_delete" placeholder="Id">
+    <button onclick="deleteJSON()">DELETE</button>
+
+    </br>
+    </br>
+
+    <input type="text" id="id_get" placeholder="Id">
+    <button onclick="getJSON()">GET</button>
+    <p class="result" style="color:blue"></p>
+
+    </br>
+    </br>
+
+    <input type="text" id="id_post" placeholder="Id">
+    <input type="text" id="name_post" placeholder="Name">
+    <input type="text" id="surname_post" placeholder="Surname">
+    <button onclick="postJSON()">POST</button>
+
+
+    {% if people.count > 0 %}
+    <h2>Список номінантів на премію Греммі (продюсери)</h2>
+    <table>
+        <tr><th>Id</th><th>Name</th><th>Surname</th></tr>
+        {% for person in people %}
+        <tr><td>{{ person.id }}</td><td>{{ person.name }}</td><td>{{ person.surname }}</td></tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+
+</body>
+<script>
+    function putJSON() {
+      let name = document.querySelector('#name');
+      let surname = document.querySelector('#surname');
+      let xhr = new XMLHttpRequest();
+      let url = "http://127.0.0.1:8000/api/contacts/";
+      xhr.open("PUT", url, true);
+     
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function () {
+        
+        if (xhr.readyState === 4 && xhr.status === 201) {
+          if(!alert("Дані успішно додані")){window.location.reload();}
+        }
+      }
+      var data = JSON.stringify({"name": name.value, "surname": surname.value });
+      xhr.send(data);
+    }
+
+    function deleteJSON() {
+      let id_delete = document.querySelector('#id_delete');
+      let xhr = new XMLHttpRequest();
+      let url = "http://127.0.0.1:8000/api/contacts/";
+      xhr.open("DELETE", url, true);
+      
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function () {
+        
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          if(!alert("Запис успішно видалено")){window.location.reload();}
+        }
+        else if (xhr.status === 400){
+          if(!alert("Bad request - 404")){window.location.reload();}
+        }
+      };
+
+      var data = JSON.stringify({"id": id_delete.value });
+      xhr.send(data);
+    }
+
+    function getJSON() {
+      let id_get = document.querySelector('#id_get');
+      let result = document.querySelector('.result');
+      let xhr = new XMLHttpRequest();
+      let url = "http://127.0.0.1:8000/api/contacts/?id=" + id_get.value;
+      xhr.open("GET", url, true);
+     
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          let response = this.responseText
+          result.innerHTML = response;
+        }
+        else if (xhr.status === 400){
+          result.innerHTML = "400 - Bad request";
+        }
+        else{
+          result.innerHTML = "Error";
+        }
+      };
+
+      xhr.send();
+    }
+
+    function postJSON() {
+      let name_post = document.querySelector('#name_post');
+      let surname_post = document.querySelector('#surname_post');
+      let id_post = document.querySelector('#id_post');
+      let xhr = new XMLHttpRequest();
+      let url = "http://127.0.0.1:8000/api/contacts/";
+      xhr.open("POST", url, true);
+     
+      
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.onreadystatechange = function () {
+        
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          if(!alert("Запис успішно оновлено (додано)")){window.location.reload();}
+        }
+        else if (xhr.status === 400){
+          if(!alert("Bad request - 404")){window.location.reload();}
+        }
+      };
+
+      var data = JSON.stringify({"id": id_post.value, "name": name_post.value, "surname": surname_post.value });
+      xhr.send(data);
+    }
+
+  </script>
+</html>
